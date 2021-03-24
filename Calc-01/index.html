@@ -102,7 +102,7 @@
     ];
 
   const advancedKeys = [
-    "(",")","Hist"
+    "(",")","Hist", "Up", "AC"
   ];
 
   const Button = ({value, onClick, className}) => (
@@ -121,12 +121,20 @@
     const [showAdv, setShowAdv] = React.useState(false)
     const [history, setHistory] = React.useState([])
     const [showHist, setShowHist] = React.useState(false)
+    const histRef = React.useRef()
 
     React.useEffect(() => { // não adicione dentro de funções internas - condicionais
         if(erro){
           setErro();
         }
     },[state])
+
+    React.useEffect(() => {
+      if(history.length > 2 && showHist){
+        histRef.current.scrollTop = 
+        histRef.current.scrollHeight;
+      }
+    },[history.length, showHist]);
 
     const doTheMath = () => {
       try {
@@ -161,6 +169,19 @@
         case "Hist":
           setShowHist(!showHist);
           break;
+        case "AC":
+          setState("");
+          setHistory([])
+          break;
+        case "Up":
+          const lastIndex = history.length - 1
+          if(lastIndex > -1){
+            const newDisplay = history[lastIndex].calculation;
+            const newHistory = history.slice(0, lastIndex);
+            setState(newDisplay);
+            setHistory(newHistory);
+          }
+          break;
         default:
           setState(`${state}${value}`);
           break;          
@@ -182,9 +203,9 @@
       return (
         <div className="calculator">
           {showHist && (
-            <div className="history">
-              {history.map(({calculation, result }) => (
-                <p>{`${calculation} = ${result}`}</p>
+            <div ref={histRef} className="history">
+              {history.map(({calculation, result }, index) => (
+                <p key={index}>{`${calculation} = ${result}`}</p>
               ))}
             </div>
           )}
