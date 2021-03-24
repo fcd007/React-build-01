@@ -70,25 +70,34 @@
   <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="text/babel">
-  const Header= () => <div class="header">Calculadora</div>;
+  const Header = () => <div className="header">Calculadora</div>;
+
+  const Button = (props) => (
+    <button onClick={ () => {
+          props.onNumberClick(props.value)
+        }}>
+        {props.value}
+    </button>
+  );
 
   const Calc = () => {
     const [state, setState] = React.useState("")
+    const handleNumberClick = (value) => {
+        setState(`${state}${value}`);
+      }
+
       return (
-        <div class="calculator">
-          <div class="display"> {state}</div>
-          <div class="keyboard">
-            <button onClick={ () => {
-              setState(state + "7") //usamos string para concatenar com o + valores
-            }}>
-              7
-            </button>
-            <button
-            onClick={ () => {
-              setState(state + "8") //usamos string para concatenar com o + valores
-            }}>
-              8
-            </button>
+        <div className="calculator">
+          <div className="display"> {state}</div>
+          <div className="keyboard">
+            <Button 
+              value="7"
+              onNumberClick={handleNumberClick}
+            />
+            <Button
+              value="8"
+              onNumberClick={handleNumberClick}
+            />
             <button onClick={ () => {
               setState(state + "9") //usamos string para concatenar com o + valores
             }}>
