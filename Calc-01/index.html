@@ -94,7 +94,7 @@
     ];
 
   const advancedKeys = [
-    "(",")"
+    "(",")","Hist"
   ];
 
   const Button = ({value, onClick, className}) => (
@@ -111,6 +111,7 @@
     const [state, setState] = React.useState("")
     const [erro, setErro] = React.useState()
     const [showAdv, setShowAdv] = React.useState(false)
+    const [history, setHistory] = React.useState([])
 
     React.useEffect(() => { // não adicione dentro de funções internas - condicionais
         if(erro){
@@ -120,6 +121,7 @@
 
     const doTheMath = () => {
       try {
+        setHistory([].concat(history, state));
         setState("" + eval(state));
       } catch (error) {
         setErro(`Error invalid express: ${error.message}`);
