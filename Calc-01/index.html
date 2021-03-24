@@ -99,7 +99,7 @@
 
   const Calc = () => {
     const [state, setState] = React.useState("")
-    const [erro, setError] = React.useState()
+    const [erro, setErro] = React.useState()
 
     const keyboard = [
       7,8,9, "/", "C",
@@ -112,7 +112,7 @@
       try {
         setState("" + eval(state));
       } catch (error) {
-        setError(`Error invalid express: ${error.message}`);
+        setErro(`Error invalid express: ${error.message}`);
       }
     }
     const handleClick = (value) => {
@@ -133,6 +133,13 @@
           break;          
         }
       }
+
+      React.useEffect(() => {
+        if(erro){
+          setErro();
+          console.log("limpou!");
+        }
+      },[state])
 
       return (
         <div className="calculator">
