@@ -73,7 +73,15 @@
     .error {
       color: red;
     }
-
+    .history {
+      padding: 0 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      height: 100px;
+      overflow-y: scroll;
+      margin-bottom: 8px;
+      text-align: right;
+    }
   </style>
   <title>Projeto Calculadora ReactJS</title>
 </head>
@@ -112,6 +120,7 @@
     const [erro, setErro] = React.useState()
     const [showAdv, setShowAdv] = React.useState(false)
     const [history, setHistory] = React.useState([])
+    const [showHist, setShowHist] = React.useState(false)
 
     React.useEffect(() => { // não adicione dentro de funções internas - condicionais
         if(erro){
@@ -121,8 +130,12 @@
 
     const doTheMath = () => {
       try {
-        setHistory([].concat(history, state));
-        setState("" + eval(state));
+        const result = eval(state);
+        setHistory([].concat(history, {
+          calculation: state,
+          result
+        }));
+        setState(`${result}`);
       } catch (error) {
         setErro(`Error invalid express: ${error.message}`);
       }
@@ -142,7 +155,11 @@
           );
           break;
         case "Adv":
-        setShowAdv(!showAdv);
+          setShowAdv(!showAdv);
+          setShowHist(false);
+          break;
+        case "Hist":
+          setShowHist(!showHist);
           break;
         default:
           setState(`${state}${value}`);
@@ -164,6 +181,13 @@
 
       return (
         <div className="calculator">
+          {showHist && (
+            <div className="history">
+              {history.map(({calculation, result }) => (
+                <p>{`${calculation} = ${result}`}</p>
+              ))}
+            </div>
+          )}
           <input 
             className="display"
             type="text"
