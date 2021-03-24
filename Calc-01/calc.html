@@ -72,23 +72,71 @@
   <script type="text/babel">
   const Header= () => <div class="header">Calculadora</div>;
 
-  const Calc = () => (
-      <div class="calculator">
-        <div class="display"></div>
-        <div class="keyboard">
-          <button>7</button>
-          <button>8</button>
-          <button>9</button>
-          <button>4</button>
-          <button>5</button>
-          <button>6</button>
-          <button>1</button>
-          <button>2</button>
-          <button>3</button>
-          <button>0</button>
+  const Calc = () => {
+    const [state, setState] = React.useState("")
+      return (
+        <div class="calculator">
+          <div class="display"> {state}</div>
+          <div class="keyboard">
+            <button onClick={ () => {
+              setState(state + "7") //usamos string para concatenar com o + valores
+            }}>
+              7
+            </button>
+            <button
+            onClick={ () => {
+              setState(state + "8") //usamos string para concatenar com o + valores
+            }}>
+              8
+            </button>
+            <button onClick={ () => {
+              setState(state + "9") //usamos string para concatenar com o + valores
+            }}>
+              9
+            </button>
+            <button onClick={ () => {
+              setState(state + "4") //usamos string para concatenar com o + valores
+            }}>
+              4
+            </button>
+            <button
+            onClick={ () => {
+              setState(state + "5") //usamos string para concatenar com o + valores
+            }}>
+              5
+            </button>
+            <button
+            onClick={ () => {
+              setState(state + "6") //usamos string para concatenar com o + valores
+            }}>
+              6
+            </button>
+            <button
+            onClick={ () => {
+              setState(state + "1") //usamos string para concatenar com o + valores
+            }}>
+              1
+            </button>
+            <button
+            onClick={ () => {
+              setState(state + "2") //usamos string para concatenar com o + valores
+            }}>
+              2
+            </button>
+            <button onClick={ () => {
+              setState(state + "3") //usamos string para concatenar com o + valores
+            }}>
+              3
+            </button>
+            <button onClick={ () => {
+              setState(state + "0") //usamos string para concatenar com o + valores
+            }}>
+              0
+            </button>
+          </div>
         </div>
-      </div>
-  );
+      );
+  }
 
   const App = () => (
       <div>
